@@ -60,8 +60,8 @@ update msg model =
 
         ToggleUserGroup username groupname ->
             ( { model
-                | users = updateIf (nameEquals username) (toggleGroupInUser username groupname) model.users
-                , groups = updateIf (nameEquals groupname) (toggleUserInGroup username groupname) model.groups
+                | users = toggleGroupInUsers username groupname model.users
+                , groups = toggleUserInGroups username groupname model.groups
               }
             , Cmd.none
             )
@@ -90,17 +90,27 @@ removeUserFromGroups username groups =
     List.map (removeUserFromGroup username) groups
 
 
-toggleGroupInUser : String -> String -> User -> User
-toggleGroupInUser username groupname user =
+toggleGroupInUser : String -> User -> User
+toggleGroupInUser groupname user =
     if List.member groupname user.groups then
         { user | groups = remove groupname user.groups }
     else
         { user | groups = groupname :: user.groups }
 
 
-toggleUserInGroup : String -> String -> Group -> Group
-toggleUserInGroup username groupname group =
+toggleGroupInUsers : String -> String -> List User -> List User
+toggleGroupInUsers username groupname =
+    updateIf (nameEquals username) (toggleGroupInUser groupname)
+
+
+toggleUserInGroup : String -> Group -> Group
+toggleUserInGroup username group =
     if List.member username group.users then
         { group | users = remove username group.users }
     else
         { group | users = username :: group.users }
+
+
+toggleUserInGroups : String -> String -> List Group -> List Group
+toggleUserInGroups username groupname =
+    updateIf (nameEquals groupname) (toggleUserInGroup username)

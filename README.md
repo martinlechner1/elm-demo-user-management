@@ -2,7 +2,7 @@
 
 * Create an UI for User / Groups management using material design
 * Play around with ELM and produce good code
-* Yet TODO: See how elm-test works
+* Try to test some business logic with fuzz testing
 
 ## Features
 * Manage users and groups (Add, View, Delete)
@@ -11,6 +11,7 @@
 * Assign Users to Groups and vice versa. Click onto List entries to see Membership
 * User / Groupname must be unique
 * Responsive View
+* Basic Testing
 
 ## Quickstart
 - Install [Create Elm App](https://github.com/halfzebra/create-elm-app) -> `npm install create-elm-app -g`
